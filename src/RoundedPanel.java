@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
+// A custom panel to make the corners of the panel look round.
 public class RoundedPanel extends JPanel {
-    private int radius;
+    private int radius; // representing the radius of the rounded corners.
 
     public RoundedPanel(int radius) {
         this.radius = radius;

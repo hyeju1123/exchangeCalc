@@ -11,9 +11,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// This dialog allows you to select the currency of a particular country, and retrieves the flag image of the selected country and displays it in the flagButton of the ExchangeView class.
 public class CurrencySelectionDialog extends JDialog {
     private Map<String, String> countryCodes = new HashMap<>(); // Map to store country codes and names
-    private String selectedCountryCode = "US";
+    private String selectedCountryCode = "US"; // Store the currently selected country code. It is initially set to "US".
 
     public String getSelectedCountryCode() {
         return selectedCountryCode;
@@ -52,6 +54,8 @@ public class CurrencySelectionDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+
+    // Populates the countryCodes map with the provided countryCodes parameter.
     public void initializeCountryCodes(Map<String, String> countryCodes) {
         for (Map.Entry<String, String> entry : countryCodes.entrySet()) {
 
@@ -71,6 +75,7 @@ public class CurrencySelectionDialog extends JDialog {
         return null;
     }
 
+    // Fetches the flag image for the currently selected country code.
     public ImageIcon createImageIcon(int width, int height) {
         try {
             String apiUrl = "https://restcountries.com/v3.1/alpha/" + selectedCountryCode;
@@ -88,7 +93,7 @@ public class CurrencySelectionDialog extends JDialog {
                 }
                 reader.close();
 
-                // Parse JSON response
+                // Parse JSON response.
                 String jsonString = response.toString();
                 int flagsIndex = jsonString.indexOf("\"flags\":");
                 if (flagsIndex != -1) {
@@ -98,7 +103,7 @@ public class CurrencySelectionDialog extends JDialog {
                         if (endIndex != -1) {
                             String flagUrl = jsonString.substring(pngIndex + 7, endIndex);
 
-                            // Load and scale the image
+                            // Load and scale the image.
                             BufferedImage originalImage = ImageIO.read(new URL(flagUrl));
                             Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                             return new ImageIcon(scaledImage);

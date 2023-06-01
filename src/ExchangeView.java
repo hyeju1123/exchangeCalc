@@ -6,15 +6,21 @@ import java.net.URL;
 import java.util.Map;
 
 public class ExchangeView extends JFrame {
+    // For input and result display.
     private JTextField inputField;
     private JTextField resultField;
+
+    // A button that allows you to select a country to exchange money.
     private RoundButton flagButton;
+    // A button to start the currency exchange calculation.
     private RoundButton exchangeButton;
 
     private double result;
 
     private CurrencySelectionDialog dialog;
 
+
+    // getter setter methods
     public RoundButton getFlagButton() {
         return flagButton;
     }
@@ -35,6 +41,7 @@ public class ExchangeView extends JFrame {
         return result;
     }
 
+    // Initializes the main frame of the application.
     public ExchangeView(Map<String, String> countryCodes) {
         setTitle("Exchange Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,6 +55,7 @@ public class ExchangeView extends JFrame {
         setLocationRelativeTo(null);
     }
 
+    // to create the main panel of the frame.
     private JPanel createMainPanel() {
         RoundedPanel mainPanel = new RoundedPanel(25);
         mainPanel.setLayout(new BorderLayout());
@@ -71,6 +79,7 @@ public class ExchangeView extends JFrame {
         return outerPanel;
     }
 
+    // method creates a content panel that contains the main panel.
     private JPanel createContentPanel(JPanel mainPanel) {
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.decode("#cccdd7"));
@@ -78,6 +87,7 @@ public class ExchangeView extends JFrame {
         return contentPanel;
     }
 
+    // method creates an outer panel that contains the content panel.
     private JPanel createOuterPanel(JPanel contentPanel) {
         JPanel outerPanel = new JPanel(new BorderLayout());
         outerPanel.setBackground(Color.decode("#cccdd7"));
@@ -86,6 +96,7 @@ public class ExchangeView extends JFrame {
         return outerPanel;
     }
 
+    // creates a JTextField(input, result fields)
     private JTextField createField(Color background, Color foreground, Font font, int horizontalAlignment,
                                    int top, int right, int bottom, int left) {
         JTextField field = new JTextField();
@@ -100,6 +111,7 @@ public class ExchangeView extends JFrame {
         return field;
     }
 
+    // method creates the panel containing the calculator buttons.
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel(new GridLayout(6, 4, 15, 15));
         buttonPanel.setBackground(Color.decode("#f0f1f5"));
@@ -127,6 +139,7 @@ public class ExchangeView extends JFrame {
         return buttonPanel;
     }
 
+    // creates a RoundButton for number and operator.
     private RoundButton createButton(String label) {
         RoundButton button = new RoundButton(label);
         button.setPreferredSize(new Dimension(70, 70));
@@ -152,6 +165,7 @@ public class ExchangeView extends JFrame {
         return button;
     }
 
+    // handle the button actions related to the input and result fields.
     private void clearInputFields() {
         inputField.setText("");
         resultField.setText("");
@@ -179,6 +193,7 @@ public class ExchangeView extends JFrame {
         }
     }
 
+    // creates the flag button.
     private RoundButton createFlagButton() {
         RoundButton flagButton = new RoundButton("");
         flagButton.setIcon(createImageIcon("https://flagcdn.com/w320/us.png", 40, 25));
@@ -189,6 +204,7 @@ public class ExchangeView extends JFrame {
         return flagButton;
     }
 
+    // creates the exchange button.
     private RoundButton createExchangeButton() {
         RoundButton exchangeButton = new RoundButton("");
         exchangeButton.setIcon(createImageIcon("img/exchange.png", 30, 30));
@@ -199,6 +215,7 @@ public class ExchangeView extends JFrame {
         return exchangeButton;
     }
 
+    // creates an ImageIcon from the provided path(restCountries api or local path)
     private ImageIcon createImageIcon(String path, int width, int height) {
         try {
             ImageIcon originalIcon;
@@ -218,10 +235,12 @@ public class ExchangeView extends JFrame {
         }
     }
 
+    // method adds an ActionListener to the exchange button.
     public void addExchangeListener(ActionListener listener) {
         exchangeButton.addActionListener(listener);
     }
 
+    // shows the currency selection dialog.
     private void showCurrencySelectionDialog() {
         dialog.setVisible(true);
     }

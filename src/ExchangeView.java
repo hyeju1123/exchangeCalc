@@ -35,6 +35,8 @@ public class ExchangeView extends JFrame {
         JPanel mainPanel = createMainPanel();
         add(mainPanel);
 
+        dialog = new CurrencySelectionDialog(this);
+
         pack();
         setLocationRelativeTo(null);
     }
@@ -162,38 +164,12 @@ public class ExchangeView extends JFrame {
     private void calculateResult() {
         try {
             String expression = inputField.getText();
-            double result = evaluateExpression(expression);
+            ExchangeViewService service = new ExchangeViewService();
+            double result = service.evaluateExpression(expression);
             resultField.setText(Double.toString(result));
         } catch (NumberFormatException e) {
             resultField.setText("Error: Invalid expression");
         }
-    }
-
-    private double evaluateExpression(String expression) {
-        expression = expression.trim();
-        String[] operands = expression.split("\\+|\\-|\\*|\\/");
-        String operator = expression.replaceAll("[^\\+\\-\\*\\/]", "");
-        double operand1 = Double.parseDouble(operands[0]);
-        double operand2 = Double.parseDouble(operands[1]);
-
-        double result = 0.0;
-
-        switch (operator) {
-            case "+":
-                result = operand1 + operand2;
-                break;
-            case "-":
-                result = operand1 - operand2;
-                break;
-            case "*":
-                result = operand1 * operand2;
-                break;
-            case "/":
-                result = operand1 / operand2;
-                break;
-        }
-
-        return result;
     }
 
     private RoundButton createFlagButton() {
@@ -240,7 +216,6 @@ public class ExchangeView extends JFrame {
     }
 
     private void showCurrencySelectionDialog() {
-        dialog = new CurrencySelectionDialog(this);
         dialog.setVisible(true);
     }
 

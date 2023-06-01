@@ -20,21 +20,20 @@ public class CurrencySelectionDialog extends JDialog {
     }
 
 
-    public CurrencySelectionDialog(Frame parent) {
+    public CurrencySelectionDialog(Frame parent, Map<String, String> countryCodes) {
         super(parent, "Currency Selection", true);
-
-        initializeCountryCodes();
 
         JPanel contentPanel = new JPanel(new GridLayout(0, 5, 10, 10));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        for (Map.Entry<String, String> entry : countryCodes.entrySet()) {
-            String countryCode = entry.getKey();
-            String countryName = entry.getValue();
+        initializeCountryCodes(countryCodes);
 
-            JButton countryButton = new JButton(countryName);
+        for (Map.Entry<String, String> entry : this.countryCodes.entrySet()) {
+            String countryCode = entry.getKey();
+
+            JButton countryButton = new JButton(countryCode);
             countryButton.addActionListener(e -> {
-                selectedCountryCode = countryCode;
+                selectedCountryCode = extractCountryCode(countryCode);
 
                 ImageIcon flagIcon = createImageIcon(40, 25);
                 ExchangeView exchangeView = (ExchangeView) parent;
@@ -53,35 +52,23 @@ public class CurrencySelectionDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
-    private void initializeCountryCodes() {
-        countryCodes.put("AE", "United Arab Emirates");
-        countryCodes.put("AT", "Austria");
-        countryCodes.put("AU", "Australia");
-        countryCodes.put("BE", "Belgium");
-        countryCodes.put("BH", "Bahrain");
-        countryCodes.put("CA", "Canada");
-        countryCodes.put("CH", "Switzerland");
-        countryCodes.put("CN", "China");
-        countryCodes.put("DE", "Germany");
-        countryCodes.put("DK", "Denmark");
-        countryCodes.put("ES", "Spain");
-        countryCodes.put("FI", "Finland");
-        countryCodes.put("GB", "United Kingdom");
-        countryCodes.put("HK", "Hong Kong");
-        countryCodes.put("ID", "Indonesia");
-        countryCodes.put("IT", "Italy");
-        countryCodes.put("JP", "Japan");
-        countryCodes.put("KR", "South Korea");
-        countryCodes.put("KW", "Kuwait");
-        countryCodes.put("MY", "Malaysia");
-        countryCodes.put("NL", "Netherlands");
-        countryCodes.put("NO", "Norway");
-        countryCodes.put("NZ", "New Zealand");
-        countryCodes.put("SA", "Saudi Arabia");
-        countryCodes.put("SE", "Sweden");
-        countryCodes.put("SG", "Singapore");
-        countryCodes.put("TH", "Thailand");
-        countryCodes.put("US", "United States");
+    public void initializeCountryCodes(Map<String, String> countryCodes) {
+        for (Map.Entry<String, String> entry : countryCodes.entrySet()) {
+
+            String countryCode = entry.getKey();
+            String countryName = entry.getValue();
+
+            this.countryCodes.put(countryCode, countryName);
+        }
+    }
+
+    private static String extractCountryCode(String line) {
+        int openParenIndex = line.indexOf('(');
+        int closeParenIndex = line.indexOf(')');
+        if (openParenIndex != -1 && closeParenIndex != -1 && openParenIndex < closeParenIndex) {
+            return line.substring(openParenIndex + 1, closeParenIndex);
+        }
+        return null;
     }
 
     public ImageIcon createImageIcon(int width, int height) {

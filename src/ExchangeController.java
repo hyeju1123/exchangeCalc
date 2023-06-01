@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class ExchangeController {
     private ExchangeModel model;
@@ -13,12 +14,12 @@ public class ExchangeController {
 
     class CalculateListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            double expression = view.getResult();
+            String expression = view.getResultFieldText();
 
             CurrencySelectionDialog dialog = view.getDialog();
             String selectedCountryCode = dialog.getSelectedCountryCode();
 
-            double result = model.calculate(expression, selectedCountryCode);
+            double result = model.calculate(Double.parseDouble(expression), selectedCountryCode);
             view.setResultFieldText(result);
         }
     }

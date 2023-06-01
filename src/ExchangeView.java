@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Map;
 
 public class ExchangeView extends JFrame {
     private JTextField inputField;
@@ -19,7 +20,8 @@ public class ExchangeView extends JFrame {
     }
 
     public String getResultFieldText() {
-        return resultField.getText();
+        String text = resultField.getText();
+        return text != null ? text : "";
     }
 
     public CurrencySelectionDialog getDialog() {
@@ -33,14 +35,14 @@ public class ExchangeView extends JFrame {
         return result;
     }
 
-    public ExchangeView() {
+    public ExchangeView(Map<String, String> countryCodes) {
         setTitle("Exchange Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainPanel = createMainPanel();
         add(mainPanel);
 
-        dialog = new CurrencySelectionDialog(this);
+        dialog = new CurrencySelectionDialog(this, countryCodes);
 
         pack();
         setLocationRelativeTo(null);

@@ -10,6 +10,8 @@ public class ExchangeView extends JFrame {
     private RoundButton flagButton;
     private RoundButton exchangeButton;
 
+    private double result;
+
     private CurrencySelectionDialog dialog;
 
     public RoundButton getFlagButton() {
@@ -30,6 +32,9 @@ public class ExchangeView extends JFrame {
 
     public void setResultFieldText(double result) {
         resultField.setText(Double.toString(result));
+    }
+    public double getResult() {
+        return result;
     }
 
     public ExchangeView() {
@@ -169,7 +174,7 @@ public class ExchangeView extends JFrame {
         try {
             String expression = inputField.getText();
             ExchangeViewService service = new ExchangeViewService();
-            double result = service.evaluateExpression(expression);
+            result = service.evaluateExpression(expression);
             resultField.setText(Double.toString(result));
         } catch (NumberFormatException e) {
             resultField.setText("Error: Invalid expression");

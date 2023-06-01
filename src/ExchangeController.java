@@ -13,7 +13,7 @@ public class ExchangeController {
 
     class CalculateListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            String expression = view.getReulstFieldText();
+            double expression = view.getResult();
 
             CurrencySelectionDialog dialog = view.getDialog();
             String selectedCountryCode = dialog.getSelectedCountryCode();

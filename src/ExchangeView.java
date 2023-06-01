@@ -20,6 +20,10 @@ public class ExchangeView extends JFrame {
         return inputField.getText();
     }
 
+    public String getReulstFieldText() {
+        return resultField.getText();
+    }
+
     public CurrencySelectionDialog getDialog() {
         return dialog;
     }

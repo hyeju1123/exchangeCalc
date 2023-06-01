@@ -208,7 +208,7 @@ public class ExchangeView extends JFrame {
 
     private RoundButton createExchangeButton() {
         RoundButton exchangeButton = new RoundButton("");
-        exchangeButton.setIcon(createImageIcon("/home/hj/수업/객체/실습/OOP/src/exchange/exchange.png", 30, 30));
+        exchangeButton.setIcon(createImageIcon("../img/exchange.png", 30, 30));
         exchangeButton.setPreferredSize(new Dimension(70, 70));
         exchangeButton.setBackgroundColor(Color.decode("#ff516b")); // 배경색 변경
         exchangeButton.setBorderPainted(false);

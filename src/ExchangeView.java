@@ -18,11 +18,7 @@ public class ExchangeView extends JFrame {
         return flagButton;
     }
 
-    public String getInputFieldText() {
-        return inputField.getText();
-    }
-
-    public String getReulstFieldText() {
+    public String getResultFieldText() {
         return resultField.getText();
     }
 

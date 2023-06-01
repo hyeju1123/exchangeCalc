@@ -5,7 +5,7 @@ public class ExchangeApp {
         SwingUtilities.invokeLater(() -> {
             ExchangeModel model = new ExchangeModel();
             ExchangeView view = new ExchangeView(model.getCountryCodes());
-            ExchangeController controller = new ExchangeController(model, view);
+            new ExchangeController(model, view);
             view.setVisible(true);
         });
     }

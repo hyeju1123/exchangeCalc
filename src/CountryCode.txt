@@ -1,24 +1,16 @@
 United Arab Emirates(AE),AED
-Austria(AT),ATS
 Australia(AU),AUD
-Belgium(BE),BEF
 Bahrain(BH),BHD
 Canada(CA),CAD
 Switzerland(CH),CHF
 China(CN),CNH
-Germany(DE),DEM
 Denmark(DK),DKK
-Spain(ES),ESP(100)
-Finland(FI),FIM
 United Kingdom(GB),GBP
 Hong Kong(HK),HKD
 Indonesia(ID),IDR(100)
-Italy(IT),ITL(100)
 Japan(JP),JPY(100)
-South Korea(KR),KRW
 Kuwait(KW),KWD
 Malaysia(MY),MYR
-Netherlands(NL),NLG
 Norway(NO),NOK
 New Zealand(NZ),NZD
 Saudi Arabia(SA),SAR

@@ -20,7 +20,8 @@ public class ExchangeController {
             String selectedCountryCode = dialog.getSelectedCountryCode();
 
             double result = model.calculate(Double.parseDouble(expression), selectedCountryCode);
-            view.setResultFieldText(result);
+            view.setResultFieldText(expression + " (KR)");
+            view.setExchangeResultField(result + " (" + selectedCountryCode + ")");
         }
     }
 }

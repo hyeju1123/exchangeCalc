@@ -18,7 +18,7 @@ public class CurrencySelectionDialog extends JDialog {
     private String selectedCountryCode = "US"; // Store the currently selected country code. It is initially set to "US".
 
     public String getSelectedCountryCode() {
-        return selectedCountryCode;
+        return this.selectedCountryCode;
     }
 
 
@@ -34,8 +34,9 @@ public class CurrencySelectionDialog extends JDialog {
             String countryCode = entry.getKey();
 
             JButton countryButton = new JButton(countryCode);
+            countryButton.setPreferredSize(new Dimension(50, countryButton.getPreferredSize().height));
             countryButton.addActionListener(e -> {
-                selectedCountryCode = extractCountryCode(countryCode);
+                this.selectedCountryCode = ExchangeModel.extractCountryCode(countryCode);
 
                 ImageIcon flagIcon = createImageIcon(40, 25);
                 ExchangeView exchangeView = (ExchangeView) parent;
@@ -47,7 +48,7 @@ public class CurrencySelectionDialog extends JDialog {
         }
 
         JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.setPreferredSize(new Dimension(600, 400));
+        scrollPane.setPreferredSize(new Dimension(900, 400));
         add(scrollPane);
 
         pack();
@@ -64,15 +65,6 @@ public class CurrencySelectionDialog extends JDialog {
 
             this.countryCodes.put(countryCode, countryName);
         }
-    }
-
-    private static String extractCountryCode(String line) {
-        int openParenIndex = line.indexOf('(');
-        int closeParenIndex = line.indexOf(')');
-        if (openParenIndex != -1 && closeParenIndex != -1 && openParenIndex < closeParenIndex) {
-            return line.substring(openParenIndex + 1, closeParenIndex);
-        }
-        return null;
     }
 
     // Fetches the flag image for the currently selected country code.

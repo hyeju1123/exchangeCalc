@@ -9,6 +9,8 @@ public class ExchangeView extends JFrame {
     // For input and result display.
     private JTextField inputField;
     private JTextField resultField;
+    private JTextField exchangeResultField;
+
 
     // A button that allows you to select a country to exchange money.
     private RoundButton flagButton;
@@ -27,15 +29,22 @@ public class ExchangeView extends JFrame {
 
     public String getResultFieldText() {
         String text = resultField.getText();
-        return text != null ? text : "";
+        int endIndex = text.lastIndexOf(" (KR)");
+        if (endIndex != -1) {
+            return text.substring(0, endIndex);
+        }
+        return "";
     }
 
     public CurrencySelectionDialog getDialog() {
         return dialog;
     }
 
-    public void setResultFieldText(double result) {
-        resultField.setText(Double.toString(result));
+    public void setResultFieldText(String result) {
+        resultField.setText(result);
+    }
+    public void setExchangeResultField(String result) {
+        exchangeResultField.setText(result);
     }
     public double getResult() {
         return result;
@@ -58,26 +67,49 @@ public class ExchangeView extends JFrame {
     // to create the main panel of the frame.
     private JPanel createMainPanel() {
         RoundedPanel mainPanel = new RoundedPanel(25);
-        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBackground(Color.decode("#f0f1f5"));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JPanel buttonPanel = createButtonPanel();
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
         inputField = createField(Color.decode("#f0f1f5"), Color.decode("#cccdd7"), new Font("Arial", Font.PLAIN, 25),
                 JTextField.RIGHT, 10, 35, 5, 5);
-        mainPanel.add(inputField, BorderLayout.CENTER);
 
-        resultField = createField(Color.decode("#f0f1f5"), null, new Font("Arial", Font.PLAIN, 50),
-                JTextField.RIGHT, 30, 5, 5, 5);
-        mainPanel.add(resultField, BorderLayout.NORTH);
+        exchangeResultField = createField(Color.decode("#f0f1f5"), null, new Font("Arial", Font.PLAIN, 30),
+                JTextField.RIGHT, 30, 35, 5, 5);
+
+        resultField = createField(Color.decode("#f0f1f5"), null, new Font("Arial", Font.PLAIN, 30),
+                JTextField.RIGHT, 30, 35, 5, 5);
+        resultField.setText("0.0 (KR)");
+
+        JPanel buttonPanel = createButtonPanel();
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        mainPanel.add(resultField, gbc);
+
+        gbc.gridy = 1;
+        gbc.weighty = 0.0;
+        mainPanel.add(exchangeResultField, gbc);
+
+        gbc.gridy = 2;
+        mainPanel.add(inputField, gbc);
+
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.PAGE_END;
+        gbc.insets = new Insets(10, 0, 0, 0);
+        mainPanel.add(buttonPanel, gbc);
 
         JPanel contentPanel = createContentPanel(mainPanel);
         JPanel outerPanel = createOuterPanel(contentPanel);
 
         return outerPanel;
     }
+
+
 
     // method creates a content panel that contains the main panel.
     private JPanel createContentPanel(JPanel mainPanel) {
@@ -169,6 +201,7 @@ public class ExchangeView extends JFrame {
     private void clearInputFields() {
         inputField.setText("");
         resultField.setText("");
+        exchangeResultField.setText("");
     }
 
     private void deleteLastCharacter() {
@@ -187,7 +220,7 @@ public class ExchangeView extends JFrame {
             String expression = inputField.getText();
             ExchangeViewService service = new ExchangeViewService();
             result = service.evaluateExpression(expression);
-            resultField.setText(Double.toString(result));
+            resultField.setText(result + " (KR)");
         } catch (NumberFormatException e) {
             resultField.setText("Error: Invalid expression");
         }

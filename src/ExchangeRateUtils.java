@@ -29,6 +29,7 @@ public class ExchangeRateUtils {
 
         String authKey = "u8akUyDASnytO1ngm0iJRfyOpV3WhTuy";
         String searchDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        searchDate = "20230601";
         String dataType = "AP01";
         double exchangeRate = 0;
         String countryCode = selectedCode;
@@ -65,7 +66,6 @@ public class ExchangeRateUtils {
                         JSONObject exchangeRateInfo = (JSONObject) o;
                         if (exchangeRateInfo.get("cur_unit").equals(countryCode)) {
 
-                            // 쉼표가 포함되어 String 형태로 들어오는 데이터를 Double로 파싱하기 위한 부분
                             // String -> Double
                             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
                             exchangeRate = (format.parse(exchangeRateInfo.get("deal_bas_r").toString()).doubleValue());

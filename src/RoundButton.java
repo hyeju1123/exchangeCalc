@@ -9,9 +9,9 @@ public class RoundButton extends JButton {
         setPreferredSize(new Dimension(70, 70));
         setFocusPainted(false);
         setContentAreaFilled(false);
-        setBackgroundColor(Color.WHITE); // 기본 배경색을 설정합니다.
+        setBackgroundColor(Color.WHITE);
 
-        Font buttonFont = new Font("Arial", Font.PLAIN, 18); // 예시로 Arial 폰트를 사용하고, 굵게, 크기는 16으로 설정합니다.
+        Font buttonFont = new Font("Arial", Font.PLAIN, 18);
         setFont(buttonFont);
     }
 

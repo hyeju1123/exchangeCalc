@@ -19,7 +19,7 @@ public class ExchangeModel {
 
     //Change selected country code to currency code
     public Map<String, String> getCountryCodes() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("/home/hj/수업/객체/실습/OOP/src/test/src/CountryCode.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("CountryCode.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");

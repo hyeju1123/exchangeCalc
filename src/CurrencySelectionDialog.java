@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,17 +33,14 @@ public class CurrencySelectionDialog extends JDialog {
             String countryName = entry.getValue();
 
             JButton countryButton = new JButton(countryName);
-            countryButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    selectedCountryCode = countryCode;
+            countryButton.addActionListener(e -> {
+                selectedCountryCode = countryCode;
 
-                    ImageIcon flagIcon = createImageIcon(40, 25);
-                    ExchangeView exchangeView = (ExchangeView) parent;
-                    exchangeView.getFlagButton().setIcon(flagIcon);
+                ImageIcon flagIcon = createImageIcon(40, 25);
+                ExchangeView exchangeView = (ExchangeView) parent;
+                exchangeView.getFlagButton().setIcon(flagIcon);
 
-                    dispose();
-                }
+                dispose();
             });
             contentPanel.add(countryButton);
         }

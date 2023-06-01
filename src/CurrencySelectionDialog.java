@@ -1,5 +1,3 @@
-import com.google.gson.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +25,7 @@ public class CurrencySelectionDialog extends JDialog {
     public CurrencySelectionDialog(Frame parent) {
         super(parent, "Currency Selection", true);
 
-        initializeCountryCodes(); // Initialize country codes and names
+        initializeCountryCodes();
 
         JPanel contentPanel = new JPanel(new GridLayout(0, 5, 10, 10));
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -42,12 +40,11 @@ public class CurrencySelectionDialog extends JDialog {
                 public void actionPerformed(ActionEvent e) {
                     selectedCountryCode = countryCode;
 
-                    // Update the icon of the flagButton in the parent ExchangeView
                     ImageIcon flagIcon = createImageIcon(40, 25);
                     ExchangeView exchangeView = (ExchangeView) parent;
                     exchangeView.getFlagButton().setIcon(flagIcon);
 
-                    dispose(); // Close the dialog
+                    dispose();
                 }
             });
             contentPanel.add(countryButton);
@@ -109,38 +106,30 @@ public class CurrencySelectionDialog extends JDialog {
                 }
                 reader.close();
 
-                JsonElement jsonElement = JsonParser.parseString(response.toString());
+                // Parse JSON response
+                String jsonString = response.toString();
+                int flagsIndex = jsonString.indexOf("\"flags\":");
+                if (flagsIndex != -1) {
+                    int pngIndex = jsonString.indexOf("\"png\":\"", flagsIndex);
+                    if (pngIndex != -1) {
+                        int endIndex = jsonString.indexOf("\"", pngIndex + 7);
+                        if (endIndex != -1) {
+                            String flagUrl = jsonString.substring(pngIndex + 7, endIndex);
 
-                JsonObject jsonObject = null;
-                if (jsonElement.isJsonObject()) {
-                    jsonObject = jsonElement.getAsJsonObject();
-                } else if (jsonElement.isJsonArray()) {
-                    JsonArray jsonArray = jsonElement.getAsJsonArray();
-                    if (jsonArray.size() > 0) {
-                        jsonObject = jsonArray.get(0).getAsJsonObject();
-                    } else {
-                        System.out.println("Empty JSON array response: " + response);
-                        return null;
+                            // Load and scale the image
+                            BufferedImage originalImage = ImageIO.read(new URL(flagUrl));
+                            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                            return new ImageIcon(scaledImage);
+                        }
                     }
-                } else {
-                    System.out.println("Invalid JSON response: " + response);
-                    return null;
                 }
-
-                JsonObject flagsObject = jsonObject.getAsJsonObject("flags");
-                String flagUrl = flagsObject.get("png").getAsString();
-
-                // Load and scale the image
-                BufferedImage originalImage = ImageIO.read(new URL(flagUrl));
-                Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                return new ImageIcon(scaledImage);
             } else {
                 System.out.println("Failed to fetch flag image for: " + selectedCountryCode);
-                return null;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
+
 }

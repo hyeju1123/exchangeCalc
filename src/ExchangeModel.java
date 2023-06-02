@@ -2,9 +2,6 @@ import java.math.BigDecimal;
 
 public class ExchangeModel {
     public double calculate(double expression, String selectedCode) {
-        /*System.out.println(expression);
-        System.out.println(selectedCode);*/
-
         //Exchange rate inquiry
         double exchangeRate = ExchangeRateUtils.getExchangeRate(getISO(selectedCode));
         //EXchange KRW for currency unit of selected country

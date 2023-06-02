@@ -52,12 +52,10 @@ public class ExchangeRateUtils {
                 reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                 while ((line = reader.readLine()) != null) {
                     responseContent.append(line);
-                    System.out.println(1);
                 }
                 reader.close();
             } else { // Succeed
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                System.out.println(2);
                 while ((line = reader.readLine()) != null) {
                     JSONArray exchangeRateInfoList = (JSONArray) parser.parse(line);
 
